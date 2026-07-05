@@ -224,4 +224,4 @@ Full annotations in `research/sources.md`. Quick links:
 
 ---
 
-*Built by [Your Name] · July 2026 · Tools: Cursor AI + OpenAI Codex + youtube-transcript-api*
+*Built by Nishchit Sheth · July 2026 · Tools: Cursor AI + OpenAI Codex + youtube-transcript-api*
