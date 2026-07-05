@@ -1,0 +1,139 @@
+import os
+import re
+from pathlib import Path
+from datetime import date
+from urllib.parse import urlparse, parse_qs
+
+from youtube_transcript_api import YouTubeTranscriptApi
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+INPUT_FILE = BASE_DIR / "scripts" / "youtube_urls.txt"
+OUTPUT_DIR = BASE_DIR / "research" / "youtube-transcripts"
+
+
+TEMPLATE = """# {title}
+
+- Expert: {expert}
+- Source: {url}
+- Video ID: {video_id}
+- Date Collected: {collected}
+- Format: YouTube Transcript
+
+---
+
+## Raw Transcript
+
+{transcript}
+
+---
+
+## Key tactic(s) extracted
+
+- TODO
+
+---
+
+## Where this agrees / disagrees with other experts in this repo
+
+- TODO
+"""
+
+
+def extract_video_id(url: str):
+    parsed = urlparse(url)
+
+    if parsed.hostname in ("youtu.be",):
+        return parsed.path.lstrip("/")
+
+    if parsed.hostname and "youtube.com" in parsed.hostname:
+        return parse_qs(parsed.query).get("v", [None])[0]
+
+    return None
+
+
+def safe_filename(text):
+    text = text.lower()
+    text = re.sub(r"[^\w\s-]", "", text)
+    text = re.sub(r"\s+", "-", text)
+    return text[:80]
+
+
+def save_transcript(expert, url):
+    video_id = extract_video_id(url)
+
+    if not video_id:
+        print(f"❌ Invalid URL: {url}")
+        return
+
+    try:
+        transcript = YouTubeTranscriptApi.get_transcript(video_id)
+    except Exception as e:
+        print(f"⚠️ Skipped ({video_id}) : {e}")
+        return
+
+    transcript_text = "\n".join(segment["text"] for segment in transcript)
+
+    title = video_id
+
+    expert_folder = OUTPUT_DIR / expert
+    expert_folder.mkdir(parents=True, exist_ok=True)
+
+    filename = expert_folder / f"{safe_filename(title)}.md"
+
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(
+            TEMPLATE.format(
+                title=title,
+                expert=expert.replace("-", " ").title(),
+                url=url,
+                video_id=video_id,
+                collected=date.today().isoformat(),
+                transcript=transcript_text,
+            )
+        )
+
+    print(f"✅ Saved: {filename.name}")
+
+
+def parse_input():
+    expert = None
+
+    with open(INPUT_FILE, encoding="utf-8") as f:
+
+        for line in f:
+
+            line = line.strip()
+
+            if not line:
+                continue
+
+            if line.startswith("http"):
+
+                yield expert, line
+
+            else:
+
+                expert = line
+
+
+def main():
+
+    print("=" * 60)
+    print("YouTube Transcript Batch Downloader")
+    print("=" * 60)
+
+    count = 0
+
+    for expert, url in parse_input():
+
+        save_transcript(expert, url)
+        count += 1
+
+    print("=" * 60)
+    print(f"Finished processing {count} URLs")
+    print("=" * 60)
+
+
+if __name__ == "__main__":
+    main()
