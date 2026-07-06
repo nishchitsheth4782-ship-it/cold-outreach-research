@@ -1,5 +1,11 @@
 # 🚀 Cold Outreach Pipeline for B2B SaaS — Research Project
 
+![Status](https://img.shields.io/badge/Status-Completed-success)
+![Research](https://img.shields.io/badge/Experts-10-blue)
+![LinkedIn](https://img.shields.io/badge/LinkedIn-Research-blue)
+![YouTube](https://img.shields.io/badge/YouTube-19%20Transcripts-red)
+![Automation](https://img.shields.io/badge/API-youtube--transcript--api-orange)
+
 > **Research project built for a B2B SaaS growth role application.**
 > Methodology: manually identify top practitioners → collect their real public content via APIs and manual curation → synthesize cross-expert insights into an actionable playbook.
 >
@@ -49,7 +55,19 @@ cold-outreach-research/
     ├── fetch_youtube_transcripts.py   ← free transcript collector (no API key needed)
     └── claude_code_prompts.md         ← prompt playbook used with Codex
 ```
+## 📚 Research Deliverables
 
+This repository includes:
+
+- Expert selection and source validation
+- LinkedIn outreach research
+- YouTube transcript collection
+- Automated transcript collection workflow
+- Cross-expert synthesis
+- Cold outreach framework
+- Executive research summary
+
+Together these documents provide both the raw research data and the synthesized insights required to build a practical B2B SaaS cold outreach playbook.
 ---
 
 ## 👥 The 10 Experts
@@ -224,4 +242,22 @@ Full annotations in `research/sources.md`. Quick links:
 
 ---
 
+<<<<<<< HEAD
 *Built by Nishchit Sheth · July 2026 · Tools: Cursor AI + OpenAI Codex + youtube-transcript-api*
+=======
+## Author
+
+**Nishchit Sheth**
+
+Built as a practical research project demonstrating structured research, technical automation, documentation, and synthesis for modern B2B SaaS cold outreach.
+
+**Technologies Used**
+
+- Cursor AI
+- OpenAI Codex
+- Google Colab
+- youtube-transcript-api
+- Git & GitHub
+- Markdown
+- Python
+>>>>>>> 5dcf6db (Add final project summary and improve README documentation)
