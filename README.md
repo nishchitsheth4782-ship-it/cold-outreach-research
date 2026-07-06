@@ -242,9 +242,7 @@ Full annotations in `research/sources.md`. Quick links:
 
 ---
 
-<<<<<<< HEAD
-*Built by Nishchit Sheth · July 2026 · Tools: Cursor AI + OpenAI Codex + youtube-transcript-api*
-=======
+
 ## Author
 
 **Nishchit Sheth**
@@ -260,4 +258,3 @@ Built as a practical research project demonstrating structured research, technic
 - Git & GitHub
 - Markdown
 - Python
->>>>>>> 5dcf6db (Add final project summary and improve README documentation)
